@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+                <a class="navbar-brand" href="index.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Home</a>
+                        <a class="navbar-brand" href="viewAllCourses.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Courses</a>
+                        <a class="navbar-brand" href="addNewStudent.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Student</a>
+                        <a class="navbar-brand" href="viewAllStudents.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Students</a>
+                        <a class="navbar-brand" href="addNewTeacher.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Teacher</a>
+                        <a class="navbar-brand" href="viewAllTeachers.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Teachers</a>
+                        <a class="navbar-brand" href="addNewSubject.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Subjects</a>
+                        <a class="navbar-brand" href="viewAllSubjects.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Subjects</a>
+                        
+                <a class="navbar-brand" href="viewStudent.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Search Student</a>
+        </nav>
+        <br/>
+        <center><h4>Add New Course</h4></center></br>
+        <div id="addNewCourseForm" class="form-group">
+                 
+            <center><input v-model="courseName" class="form-control" style="width:300px;" placeholder="Course Name" type="text"></center></br>
+            <center><button v-on:click="addNewCourse()" class="btn btn-primary">Add Course</button></center>
+            
+        </div>
+
+    <script>
+        let app=new Vue({
+            el:'#addNewCourseForm',  
+            data:{
+                courseName:'',
+            },
+            mounted()
+            {
+                
+            },
+            methods:{
+                addNewCourse()
+                {
+                    axios.post("http://localhost:1234/courses/", {
+                        courseName : this.courseName,
+                     })
+                    .then((response) => {
+                        if(response.data.success)
+                        {
+                            window.alert('Course added!')
+                        }
+                        else
+                        {
+                            window.alert('Course could not be added')
+                        }
+                        
+                    })                  
+                },
+                           
+            }
+        })
+    </script>
+</body>
+</html>

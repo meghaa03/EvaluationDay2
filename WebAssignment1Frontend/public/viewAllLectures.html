@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Batch</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+        
+        <div id="app">
+                <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+                        <a class="navbar-brand" href="index.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Home</a>
+                        <a class="navbar-brand" href="viewAllCourses.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Courses</a>
+                        <a class="navbar-brand" href="addNewCourse.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Course</a>
+                        <a class="navbar-brand" href="addNewStudent.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Student</a>
+                        <a class="navbar-brand" href="viewAllStudents.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Students</a>
+                        <a class="navbar-brand" href="addNewTeacher.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Teacher</a>
+                        <a class="navbar-brand" href="viewAllTeachers.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Teachers</a>
+                        <a class="navbar-brand" href="addNewSubject.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Subjects</a>
+                        <a class="navbar-brand" href="viewAllSubjects.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Subjects</a>
+                        
+                <a class="navbar-brand" href="viewStudent.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Search Student</a>
+                </nav>
+            </br>
+                
+            <div class="row justify-content-center">
+                <div v-for="lecture in lectureList">
+                    <div class="container">
+                        <div class="jumbotron">
+                            <div class="card col-sm-12" style="height:200px;width:300px">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{lecture.lectureId}}</h4>
+                                    <p class="card-text">Lecture Name: {{lecture.lectureName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <script>
+        let app=new Vue({
+            el:'#app',  
+            data:{
+                lectureList:[],
+                courseId:'',
+                batchId:''
+            },
+            mounted()
+            {
+                this.getAllLectures()
+            },
+            methods:{
+                getAllLectures()
+                {
+                    this.courseId=localStorage['courseId']
+                    this.batchId=localStorage['batchId']
+                    axios.get("http://localhost:1234/courses/"+this.courseId+"/batches/"+this.batchId+"/lectures")
+                    .then((response)=>{
+                        this.lectureList=response.data
+                    },(error)=>{
+                        console.log("Error")
+                    })
+                },
+                                
+            }
+        })
+    </script>
+</body>
+</html>

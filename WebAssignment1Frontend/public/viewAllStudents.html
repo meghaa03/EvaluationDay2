@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <title>Students</title>
+</head>
+<body>
+
+    <div id="studentElement">
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+                    <a class="navbar-brand" href="index.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Home</a>
+                        <a class="navbar-brand" href="viewAllCourses.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Courses</a>
+                        <a class="navbar-brand" href="addNewCourse.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Course</a>
+                        <a class="navbar-brand" href="addNewStudent.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Student</a>
+                        <a class="navbar-brand" href="addNewTeacher.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Teacher</a>
+                        <a class="navbar-brand" href="viewAllTeachers.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Teachers</a>
+                        <a class="navbar-brand" href="addNewSubject.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Add Subjects</a>
+                        <a class="navbar-brand" href="viewAllSubjects.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Subjects</a>
+                        
+                <a class="navbar-brand" href="viewStudent.html" style="border-right-style: solid;border-color: white;padding-right: 10px;" >Search Student</a>
+            </nav>
+        </br>
+            
+        <div class="row justify-content-center">
+            <div v-for="student in students">
+                <div class="container">
+                    <div class="jumbotron">
+                        <div class="card col-sm-12" style="height:200px;width:300px">
+                            <div class="card-body">
+                                <h4 class="card-title">Student Name: {{student.studentName}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    
+    <script>
+        let app = new Vue({
+               el: '#studentElement',
+               data: {
+                   students: [],
+               },
+               mounted(){
+                       this.getStudents();
+               },
+               methods: {
+                getStudents(){
+                    axios.get('http://localhost:1234/students')
+                        .then((response) => {      
+                            this.students = response.data
+                        })
+                   }
+               }
+           })
+       </script>
+</body>
+</html>
